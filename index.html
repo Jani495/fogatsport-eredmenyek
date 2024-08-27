@@ -12,20 +12,19 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        table {
-             width: 100%;
-             table-layout: auto;
-        }
-
         .container {
             display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            flex: 1 1 100%; /* Telefonon egy oszlopba rendezve */
+        }
+
+        @media(min-width: 768px) {
+        .item {
+            flex: 1 1 50%; /* Tablet méret felett két oszlopba rendezve */
+             }
         }
         .section {
             text-align: center;
