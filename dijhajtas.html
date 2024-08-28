@@ -36,6 +36,15 @@
             font-size: larger;
             padding-top: 5px;
             padding-bottom: 5px;
+	.container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Igazítja a linket jobbra */
+        }
+        .official-link {
+             margin-top: 10px; /* Távolság a táblázat fölött */
+             text-decoration: none;
+             font-weight: bold;
         }
         thead {
 	        th {
@@ -53,9 +62,7 @@
     </style>
 </head>
 <body>
-    <div>
-    <a class="btn btn-outline-dark fixed-top" style="width:8%" href="test.pdf" role="button">Hivatalos Eredmények</a>
-    </div>
+    <div class="container">
     <table>
         <thead>
             <tr><th colspan="7" id="SOR1">Nem hivatalos online eredmények</th></tr>
@@ -85,5 +92,7 @@
   	    <tr><th></th><th></th><td></td><td></td><td></td><td></td><td></td></tr>
         </tbody>
     </table>
+    <a href="hivatalos_eredmenyek.pdf" class="bootstrap.min.css">Hivatalos Eredmények</a>
+ </div>		    
 </body>
 </html>
