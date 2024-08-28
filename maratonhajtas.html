@@ -37,6 +37,18 @@
             padding-top: 5px;
             padding-bottom: 5px;
         }
+	.container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Igazítja a linket jobbra */
+        }
+
+        .official-link {
+             margin-top: 10px; /* Távolság a táblázat fölött */
+             text-decoration: none;
+             font-weight: bold;
+        }
+    
         thead {
 	        th {
 		        background-color: rgb(101, 78, 54)
@@ -53,8 +65,9 @@
     </style>
 </head>
 <body>
-    <a class="btn btn-outline-dark" href="hivatalos_eredmenyek.pdf" style="position: absolute; bottom: 10px; right: 10px;">Hivatalos Eredmények</a>
-    <table>
+ <div class="container">
+  <h2>Nem hivatalos online eredmények</h2>
+  <table>
         <thead>
             <tr><th colspan="9" id="SOR1">Nem hivatalos online eredmények</th></tr>
         </thead>
@@ -66,8 +79,8 @@
             <tr><th></th><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td></td><td></td>
             <tr><th></th><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td><div></div><div></div></td><td></td><td></td>
         </tbody>
-        
-        <!-- ugyan ugy mehet-->
     </table>
+    <a href="hivatalos_eredmenyek.pdf" class="official-link">Hivatalos Eredmények</a>
+ </div>	
 </body>
 </html>
