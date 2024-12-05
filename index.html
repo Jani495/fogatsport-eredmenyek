@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fogatsport Online Eredmények</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Eredmények</title>
     <style>
         body {
-            background-color: rgb(181, 175, 127);
+            background-image: url('E:/asztal/web/html/static/images/Háttér.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: center;
             color: black;
             font-family: 'Roboto', sans-serif !important;
             text-align: center;
@@ -16,69 +20,80 @@
         .container {
             display: flex;
             flex-wrap: wrap;
-        }
-
-        .item {
-            flex: 1 1 100%; /* Telefonon egy oszlopba rendezve */
-        }
-
-        @media(min-width: 768px) {
-        .item {
-            flex: 1 1 50%; /* Tablet méret felett két oszlopba rendezve */
-             }
+            justify-content: space-around;
+            margin-top: 50px;
         }
         .section {
             text-align: center;
-        }   
-        .container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 50px;
+            margin: 20px;
+            flex: 1 1 300px;
+        }
+        .special-section {
+            text-align: center;
+            flex: 0 0 300px; /* Fixált szélesség */
+            margin-left: auto; /* Jobbra igazítja */
         }
         .section img {
             width: 300px;
             height: 200px;
             object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .section img:hover {
+            transform: scale(1.05); /* Kép nagyítása hoverkor */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Árnyék hoverkor */
         }
         .section a {
-            display: block;
-            margin: auto-t;
-            font-size: 20px;
+            display: inline-block;
+            font-size: 30px;
             text-decoration: none;
-            color: black;
+            color: rgb(0, 0, 0);
+            background-color:#066b04 ; /* Gomb színe */
+            padding: 20px 30px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
         }
-        h2{
+        .section a:hover {
+            background-color: #910e0e; /* Hover szín */
+            transform: translateY(-3px); /* Gomb kiemelkedése hoverkor */
+        }
+        h1 {
+            padding-top: 40px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Szöveg árnyéka */
+        }
+        h2 {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 80px;
             font-family: 'Times New Roman', Times, serif;
             font-size: xx-large;
         }
-        h2 a{
-            margin:auto !important;
-            font size: 2rem !important;
-            
-        }
-        h1{
-            padding-top: 40px;
+        h2 a {
+            margin: auto !important;
+            font-size: 2rem !important;
         }
     </style>
 </head>
 <body>
-    <h1>Fogatsport Online Eredmények</h1>
+    <h1>Fogathajtó Online Eredmények</h1>
     <div class="container">
         <div class="section">
-            <img src="Holle-kettesfogat.jpg" alt="Díjhajtás">
-            <a class="btn btn-outline-dark my-3" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRi2dYy3YB4py95XbaBQmuwDZSVECz7_bgXSYWBbZnnk7iAHSDfXqjQ6W4ccYNypg/pubhtml?gid=1682429105&single=true" role="button">Díjhajtás</a>
+            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS5yh9eg5UunDn9MSzJev_otL05ASioflL6GR6rNEALwo8h4RqS9TmrU3qROb2ZtaFAKmMXMbw14tFz/pubhtml" role="button">Díjhajtás</a>
         </div>
         <div class="section">
-            <img src="maraton apa.webp" alt="Maratonhajtás">
-            <a class="btn btn-outline-dark my-3" href="maratonhajtas.html" role="button">Maratonhajtás</a>
+            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTeb9QWX7r-6UZAEzfd4XXsWFqF_gHk3FNquc6em9Q9ZSM3l0uNX1M4-RvG2rln52O-MYh2v5ss-2pw/pubhtml" role="button">Maratonhajtás</a>
         </div>
         <div class="section">
-            <img src="akadály.jpg" alt="Akadályhajtás">
-            <a class="btn btn-outline-dark my-3" href="akadalayhajtas.html" role="button">Akadályhajtás</a>
+            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vR7b4C5kwBZmWzx3WdRIxcdE9VhPTonDetSqEWTIvt2gxoijvAO23aeeQaiHNUldwWnHoWSYwk2bPXI/pubhtml" role="button">Akadályhajtás</a>
+        </div>
+        <div class="section">
+            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRNYZSrCxx8r1OnOQ0wrbbBIWuAos_K_z6xki7zL5Y4oXOwzGkqNf8LzmH9QFryM4-d6JOdzUhPor0H/pubhtml" role="button">A+B+C Verseny</a>
+        </div>
+        <div class="section">
+            <a href="fedeles.html" role="button">Fedeles Verseny</a>
         </div>
     </div>
-    <b><h2><a class="btn btn-outline-dark my-3" href="vegeredmenyek.html" role="button">Végeredmények</a></h2></b>
 </body>
 </html>
