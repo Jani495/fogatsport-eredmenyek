@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fedeles Verseny</title>
+    <style>
+        body {
+            background-image: url('Háttér.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: black;
+            font-family: 'Roboto', sans-serif !important;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+        .section {
+            text-align: center;
+            margin: 20px;
+            flex: 1 1 300px;
+        }
+        .section a {
+            display: inline-block;
+            font-size: 30px;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+            background-color: #066b04; /* Gomb színe */
+            padding: 20px 30px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .section a:hover {
+            background-color: #910e0e; /* Hover szín */
+            transform: translateY(-3px); /* Gomb kiemelkedése hoverkor */
+        }
+        h1 {
+            padding-top: 40px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Szöveg árnyéka */
+        }
+    </style>
+</head>
+<body>
+    <h1>Fedeles Verseny Fordulói</h1>
+    <div class="container">
+        <div class="section">
+            <a href="#" role="button">1. Forduló</a>
+        </div>
+        <div class="section">
+            <a href="#" role="button">2. Forduló</a>
+        </div>
+        <div class="section">
+            <a href="#" role="button">Összevetés</a>
+        </div>
+    </div>
+</body>
+</html>
