@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eredmény rögzítés</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #764ba2;
+            margin: 0 0 10px 0;
+        }
+        .startszam {
+            background: #764ba2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .fordulo-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .fordulo-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #e0e0e0;
+            transition: all 0.3s;
+        }
+        .fordulo-btn.f1.active {
+            background: #2196F3;
+            color: white;
+        }
+        .fordulo-btn.f2.active {
+            background: #ff9800;
+            color: white;
+        }
+        .fordulo-btn.ov.active {
+            background: #4CAF50;
+            color: white;
+        }
+        .panel {
+            display: none;
+        }
+        .panel.active {
+            display: block;
+        }
+        .akadaly-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .akadaly-item {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .akadaly-item label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        .akadaly-item input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .akadaly-item input:disabled {
+            background: #e0e0e0;
+            cursor: not-allowed;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group input:disabled {
+            background: #e0e0e0;
+            cursor: not-allowed;
+        }
+        .statusz-panel {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 8px;
+        }
+        .statusz-panel h3 {
+            margin-bottom: 10px;
+            color: #764ba2;
+        }
+        .statusz-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .statusz-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .statusz-info {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .osszesito {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .btn-primary {
+            background: #764ba2;
+            color: white;
+        }
+        .btn-secondary {
+            background: #666;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>⏱ Eredmény rögzítés</h1>
+                <div class="startszam">#{{ versenyzo.startszam }}</div>
+            </div>
+
+            <div class="info">
+                <p><strong>Név:</strong> {{ versenyzo.nev }}</p>
+                <p><strong>Kategória:</strong> {{ versenyzo.kategoria }}</p>
+                <p><strong>Nemzetiség:</strong> {{ versenyzo.nemzetiseg }}</p>
+            </div>
+
+            <div class="fordulo-buttons">
+                <button class="fordulo-btn f1 active" onclick="valasztFordulo('f1', this)">1. FORDULÓ</button>
+                <button class="fordulo-btn f2" onclick="valasztFordulo('f2', this)">2. FORDULÓ</button>
+                <button class="fordulo-btn ov" onclick="valasztFordulo('ov', this)">ÖSSZEVETÉS</button>
+            </div>
+
+            <!-- 1. Forduló panel -->
+            <div id="f1-panel" class="panel active">
+                <h3 style="color: #2196F3;">🔵 1. Forduló</h3>
+                <div class="akadaly-grid" id="f1-akadalyok"></div>
+                
+                <div class="form-group">
+                    <label>Egyéb hibapont:</label>
+                    <input type="number" id="f1-egyeb" value="0" min="0" onchange="szamolas('f1')">
+                </div>
+                
+                <div class="form-group">
+                    <label>Idő (másodperc):</label>
+                    <input type="number" id="f1-ido" value="0" min="0" step="0.01" onchange="szamolas('f1')">
+                </div>
+            </div>
+
+            <!-- 2. Forduló panel -->
+            <div id="f2-panel" class="panel">
+                <h3 style="color: #ff9800;">🟠 2. Forduló</h3>
+                <div class="akadaly-grid" id="f2-akadalyok"></div>
+                
+                <div class="form-group">
+                    <label>Egyéb hibapont:</label>
+                    <input type="number" id="f2-egyeb" value="0" min="0" onchange="szamolas('f2')">
+                </div>
+                
+                <div class="form-group">
+                    <label>Idő (másodperc):</label>
+                    <input type="number" id="f2-ido" value="0" min="0" step="0.01" onchange="szamolas('f2')">
+                </div>
+            </div>
+
+            <!-- Összevetés panel -->
+            <div id="ov-panel" class="panel">
+                <h3 style="color: #4CAF50;">🟢 Összevetés</h3>
+                <div class="akadaly-grid" id="ov-akadalyok"></div>
+                
+                <div class="form-group">
+                    <label>Egyéb hibapont:</label>
+                    <input type="number" id="ov-egyeb" value="0" min="0" onchange="szamolas('ov')">
+                </div>
+                
+                <div class="form-group">
+                    <label>Idő (másodperc):</label>
+                    <input type="number" id="ov-ido" value="0" min="0" step="0.01" onchange="szamolas('ov')">
+                </div>
+            </div>
+
+            <!-- Státusz választó (MINDEN panel ALATT, de a gombok FELETT) -->
+            <div class="statusz-panel">
+                <h3>🚦 Státusz</h3>
+                <div class="statusz-options">
+                    <label>
+                        <input type="radio" name="statusz" value="" checked onchange="statuszValtozas(this.value)">
+                        <span style="font-weight: bold;">✅ Versenyben</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="statusz" value="feladta" onchange="statuszValtozas(this.value)">
+                        <span style="font-weight: bold; color: #ff9800;">⚠️ Feladta</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="statusz" value="kizárva" onchange="statuszValtozas(this.value)">
+                        <span style="font-weight: bold; color: #f44336;">🚫 Kizárva</span>
+                    </label>
+                </div>
+                <div class="statusz-info">
+                    * Ha "Feladta" vagy "Kizárva" státuszt választasz, a hiba és idő mezők automatikusan 0-ra állnak és letiltásra kerülnek
+                </div>
+            </div>
+
+            <!-- Összesítő -->
+            <div class="osszesito" id="osszesito">
+                Válassz fordulót és add meg az adatokat...
+            </div>
+
+            <button class="btn btn-primary" onclick="mentes()" id="mentesGomb">💾 EREDMÉNY MENTÉSE</button>
+            <button class="btn btn-secondary" onclick="location.href='/verseny_fooldal/{{ versenyzo.verseny_id }}'">⬅ Vissza</button>
+        </div>
+    </div>
+
+    <script>
+        let aktualisFordulo = 'f1';
+        const versenyzoId = {{ versenyzo.id }};
+        const versenyId = {{ versenyzo.verseny_id }};
+
+        // Akadályok létrehozása
+        for (let i = 1; i <= 12; i++) {
+            document.getElementById('f1-akadalyok').innerHTML += `
+                <div class="akadaly-item">
+                    <label>${i}.</label>
+                    <input type="number" id="f1-a${i}" value="0" min="0" max="5" onchange="szamolas('f1')">
+                </div>
+            `;
+            document.getElementById('f2-akadalyok').innerHTML += `
+                <div class="akadaly-item">
+                    <label>${i}.</label>
+                    <input type="number" id="f2-a${i}" value="0" min="0" max="5" onchange="szamolas('f2')">
+                </div>
+            `;
+            document.getElementById('ov-akadalyok').innerHTML += `
+                <div class="akadaly-item">
+                    <label>${i}.</label>
+                    <input type="number" id="ov-a${i}" value="0" min="0" max="5" onchange="szamolas('ov')">
+                </div>
+            `;
+        }
+
+        function valasztFordulo(fordulo, gomb) {
+            document.querySelectorAll('.fordulo-btn').forEach(g => g.classList.remove('active'));
+            gomb.classList.add('active');
+            
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(fordulo + '-panel').classList.add('active');
+            
+            aktualisFordulo = fordulo;
+            
+            // Státusz radio gomb állapotának visszaállítása
+            const radioChecked = document.querySelector('input[name="statusz"]:checked');
+            if (radioChecked) {
+                statuszValtozas(radioChecked.value);
+            }
+        }
+
+        function statuszValtozas(statusz) {
+            const panel = document.getElementById(aktualisFordulo + '-panel');
+            const inputs = panel.querySelectorAll('input');
+            const osszesito = document.getElementById('osszesito');
+            const mentesGomb = document.getElementById('mentesGomb');
+            
+            if (statusz === 'feladta' || statusz === 'kizárva') {
+                // Összes input 0-ra állítása és letiltása
+                for (let i = 1; i <= 12; i++) {
+                    const input = document.getElementById(aktualisFordulo + '-a' + i);
+                    if (input) {
+                        input.value = 0;
+                        input.disabled = true;
+                    }
+                }
+                
+                const egyebInput = document.getElementById(aktualisFordulo + '-egyeb');
+                const idoInput = document.getElementById(aktualisFordulo + '-ido');
+                
+                if (egyebInput) {
+                    egyebInput.value = 0;
+                    egyebInput.disabled = true;
+                }
+                if (idoInput) {
+                    idoInput.value = 0;
+                    idoInput.disabled = true;
+                }
+                
+                // Összesítő szöveg
+                const statuszSzoveg = statusz === 'feladta' ? 'FELADTA' : 'KIZÁRVA';
+                const statuszSzin = statusz === 'feladta' ? '#ff9800' : '#f44336';
+                
+                osszesito.innerHTML = `
+                    <div style="color: ${statuszSzin}; font-weight: bold; font-size: 1.2em;">
+                        🚫 ${statuszSzoveg}
+                    </div>
+                `;
+            } else {
+                // Inputok engedélyezése
+                for (let i = 1; i <= 12; i++) {
+                    const input = document.getElementById(aktualisFordulo + '-a' + i);
+                    if (input) {
+                        input.disabled = false;
+                    }
+                }
+                
+                const egyebInput = document.getElementById(aktualisFordulo + '-egyeb');
+                const idoInput = document.getElementById(aktualisFordulo + '-ido');
+                
+                if (egyebInput) egyebInput.disabled = false;
+                if (idoInput) idoInput.disabled = false;
+                
+                // Újraszámolás
+                szamolas(aktualisFordulo);
+            }
+        }
+
+        function szamolas(fordulo) {
+            // Ellenőrizzük, hogy a státusz nem-e feladta vagy kizárva
+            const statuszRadio = document.querySelector('input[name="statusz"]:checked');
+            if (statuszRadio && (statuszRadio.value === 'feladta' || statuszRadio.value === 'kizárva')) {
+                return; // Ne számoljon, ha feladta vagy kizárva
+            }
+            
+            let verohiba = 0;
+            for (let i = 1; i <= 12; i++) {
+                let input = document.getElementById(fordulo + '-a' + i);
+                if (input && !input.disabled) {
+                    verohiba += parseInt(input.value) || 0;
+                }
+            }
+            
+            let egyeb = parseInt(document.getElementById(fordulo + '-egyeb').value) || 0;
+            let ido = parseFloat(document.getElementById(fordulo + '-ido').value) || 0;
+            let verohibaPont = verohiba * 4;
+            let osszHiba = verohibaPont + egyeb;
+            
+            document.getElementById('osszesito').innerHTML = `
+                <strong>Verőhibák:</strong> ${verohiba} (${verohibaPont} pont)<br>
+                <strong>Egyéb:</strong> ${egyeb} pont<br>
+                <strong>Idő:</strong> ${ido.toFixed(2)} mp<br>
+                <strong style="font-size: 1.2em; color: #764ba2;">ÖSSZESEN: ${osszHiba} hiba</strong>
+            `;
+        }
+
+        function mentes() {
+            const statuszRadio = document.querySelector('input[name="statusz"]:checked');
+            const statusz = statuszRadio ? statuszRadio.value : '';
+            
+            let verohibak = {};
+            let egyeb = 0;
+            let ido = 0;
+            
+            if (statusz === 'feladta' || statusz === 'kizárva') {
+                // Feladta vagy kizárva esetén üres adatok
+                verohibak = {};
+                egyeb = 0;
+                ido = 0;
+            } else {
+                // Normál esetben összegyűjtjük az adatokat
+                for (let i = 1; i <= 12; i++) {
+                    let input = document.getElementById(aktualisFordulo + '-a' + i);
+                    if (input && parseInt(input.value) > 0) {
+                        verohibak[i] = parseInt(input.value);
+                    }
+                }
+                
+                egyeb = parseInt(document.getElementById(aktualisFordulo + '-egyeb').value) || 0;
+                ido = parseFloat(document.getElementById(aktualisFordulo + '-ido').value) || 0;
+            }
+            
+            fetch('/api/eredmeny_mentes', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    versenyzo_id: versenyzoId,
+                    fordulo: aktualisFordulo,
+                    statusz: statusz,
+                    verohibak: verohibak,
+                    egyeb_hiba: egyeb,
+                    ido: ido
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✅ Eredmény mentve!');
+                    window.location.href = '/verseny_fooldal/' + versenyId;
+                } else {
+                    alert('❌ Hiba: ' + (data.error || 'Ismeretlen hiba'));
+                }
+            })
+            .catch(error => {
+                alert('❌ Hálózati hiba: ' + error);
+            });
+        }
+
+        // Első számolás
+        szamolas('f1');
+    </script>
+</body>
+</html>
