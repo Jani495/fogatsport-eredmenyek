@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Versenyzők rögzítése</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            color: #764ba2;
+        }
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #45a049;
+        }
+        .btn-secondary {
+            background: #666;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #555;
+        }
+        .versenyzok-listaja {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            background: #764ba2;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        .kategoria-badge {
+            background: #e3f2fd;
+            color: #1976D2;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .uzenet {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .siker {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .hiba {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            table { font-size: 14px; }
+            th, td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Versenyzők rögzítése</h1>
+            <a href="{{ url_for('verseny_fooldal', verseny_id=verseny_id) }}" class="btn btn-secondary">⬅ Vissza a versenyhez</a>
+        </div>
+
+        <div class="form-card">
+            <h2 style="margin-bottom: 20px;">➕ Új versenyző hozzáadása</h2>
+            
+            <div id="uzenet"></div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Startszám:</label>
+                    <input type="number" id="startszam" required min="1" placeholder="pl. 101">
+                </div>
+                
+                <div class="form-group">
+                    <label>Versenyző neve:</label>
+                    <input type="text" id="nev" required placeholder="pl. Kiss Béla">
+                </div>
+                
+                <div class="form-group">
+                    <label>Kategória:</label>
+                    <select id="kategoria">
+                        <option value="Fedeles póni egyesfogat">Fedeles póni egyesfogat</option>
+                        <option value="Fedeles póni kettesfogat">Fedeles póni kettesfogat</option>
+                        <option value="Fedeles póni négyesfogat">Fedeles póni négyesfogat</option>
+                        <option value="Fedeles kettesfogat C kat.">Fedeles kettesfogat C kat.</option>
+                        <option value="Fedeles kettesfogat A és B">Fedeles kettesfogat A és B</option>
+                        <option value="Fedeles egyesfogat">Fedeles egyesfogat</option>
+                        <option value="Fedeles négyesfogat">Fedeles négyesfogat</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nemzetiség:</label>
+                    <select id="nemzetiseg">
+                        <option value="Magyar">🇭🇺 Magyar</option>
+                        <option value="Osztrák">🇦🇹 Osztrák</option>
+                        <option value="Német">🇩🇪 Német</option>
+                        <option value="Szlovák">🇸🇰 Szlovák</option>
+                        <option value="Román">🇷🇴 Román</option>
+                        <option value="Horvát">🇭🇷 Horvát</option>
+                        <option value="Szlovén">🇸🇮 Szlovén</option>
+                        <option value="Cseh">🇨🇿 Cseh</option>
+                        <option value="Lengyel">🇵🇱 Lengyel</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button onclick="versenyzoMentes()" class="btn btn-primary" style="width: 100%;">💾 Versenyző rögzítése</button>
+        </div>
+
+        <div class="versenyzok-listaja">
+            <h2 style="margin-bottom: 20px;">📋 Rögzített versenyzők</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Startszám</th>
+                        <th>Név</th>
+                        <th>Kategória</th>
+                        <th>Nemzetiség</th>
+                        <th>Művelet</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in versenyzok %}
+                    <tr>
+                        <td><strong>#{{ v.startszam }}</strong></td>
+                        <td>{{ v.nev }}</td>
+                        <td><span class="kategoria-badge">{{ v.kategoria }}</span></td>
+                        <td>{{ v.nemzetiseg }}</td>
+                        <td>
+                            <a href="{{ url_for('eredmeny_rögzites', verseny_id=verseny_id, startszam=v.startszam) }}" class="action-btn">⏱ Eredmény</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {% if not versenyzok %}
+            <p style="text-align: center; color: #999; padding: 20px;">Még nincsenek versenyzők rögzítve.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+    function versenyzoMentes() {
+        const startszam = document.getElementById('startszam').value;
+        const nev = document.getElementById('nev').value;
+        const kategoria = document.getElementById('kategoria').value;
+        const nemzetiseg = document.getElementById('nemzetiseg').value;
+        
+        if (!startszam || !nev) {
+            showUzenet('Minden mező kitöltése kötelező!', 'hiba');
+            return;
+        }
+        
+        fetch('/versenyzo_felvitel/{{ verseny_id }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'startszam': startszam,
+                'nev': nev,
+                'kategoria': kategoria,
+                'nemzetiseg': nemzetiseg
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                showUzenet('❌ ' + data.error, 'hiba');
+            } else {
+                showUzenet('✅ ' + data.message, 'siker');
+                document.getElementById('startszam').value = '';
+                document.getElementById('nev').value = '';
+                setTimeout(() => location.reload(), 1000);
+            }
+        });
+    }
+    
+    function showUzenet(szoveg, tipus) {
+        const uzenetDiv = document.getElementById('uzenet');
+        uzenetDiv.className = `uzenet ${tipus}`;
+        uzenetDiv.textContent = szoveg;
+        setTimeout(() => {
+            uzenetDiv.textContent = '';
+            uzenetDiv.className = '';
+        }, 3000);
+    }
+    </script>
+</body>
+</html>

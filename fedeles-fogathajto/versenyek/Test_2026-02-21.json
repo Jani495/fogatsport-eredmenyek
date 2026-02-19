@@ -1,0 +1,73 @@
+{
+  "verseny": {
+    "nev": "Test",
+    "datum": "2026-02-21"
+  },
+  "eredmenyek": [
+    {
+      "startszam": 1,
+      "nev": "István Bianka Júlia",
+      "kategoria": "Nagy ló egyes fogat",
+      "nemzetiseg": "Magyar",
+      "f1_hiba": 4,
+      "f1_ido": 165.45,
+      "f2_hiba": 0,
+      "f2_ido": 0.0,
+      "ov_hiba": 0,
+      "ov_ido": 0.0,
+      "osszevetesre_jogosult": true
+    },
+    {
+      "startszam": 2,
+      "nev": "Szabó Bence János",
+      "kategoria": "Nagy ló egyes fogat",
+      "nemzetiseg": "Magyar",
+      "f1_hiba": 0,
+      "f1_ido": 150.45,
+      "f2_hiba": 0,
+      "f2_ido": 0.0,
+      "ov_hiba": 0,
+      "ov_ido": 0.0,
+      "osszevetesre_jogosult": true
+    },
+    {
+      "startszam": 3,
+      "nev": "Makoviczki Fanni",
+      "kategoria": "Nagy ló egyes fogat",
+      "nemzetiseg": "Magyar",
+      "f1_hiba": 4,
+      "f1_ido": 151.26,
+      "f2_hiba": 0,
+      "f2_ido": 0.0,
+      "ov_hiba": 0,
+      "ov_ido": 0.0,
+      "osszevetesre_jogosult": true
+    },
+    {
+      "startszam": 4,
+      "nev": "Máté Elemér",
+      "kategoria": "Nagy ló kettes fogat",
+      "nemzetiseg": "Magyar",
+      "f1_hiba": 0,
+      "f1_ido": 0.0,
+      "f2_hiba": 0,
+      "f2_ido": 0.0,
+      "ov_hiba": 0,
+      "ov_ido": 0.0,
+      "osszevetesre_jogosult": false
+    },
+    {
+      "startszam": 5,
+      "nev": "Lázár Imre",
+      "kategoria": "Nagy ló négyes fogat",
+      "nemzetiseg": "Magyar",
+      "f1_hiba": 0,
+      "f1_ido": 0.0,
+      "f2_hiba": 0,
+      "f2_ido": 0.0,
+      "ov_hiba": 0,
+      "ov_ido": 0.0,
+      "osszevetesre_jogosult": false
+    }
+  ]
+}
