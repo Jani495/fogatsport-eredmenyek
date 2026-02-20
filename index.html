@@ -145,7 +145,7 @@
             <div class="gyors-menuk">
                 <a href="{{ url_for('verseny_fooldal', verseny_id=aktualis_verseny.id) }}" class="btn btn-primary">📋 Verseny főoldal</a>
                 <a href="{{ url_for('versenyzo_felvitel', verseny_id=aktualis_verseny.id) }}" class="btn btn-success">➕ Versenyző felvitele</a>
-                <a href="/nezok/{{ aktualis_verseny.id }}" target="_blank" class="btn btn-info">👥 Nézői felület</a>
+                <a href="/nezok/{{ aktualis_verseny.id }}" target="_blank" class="nezok.html">👥 Nézői felület</a>
                 <button onclick="lezaras({{ aktualis_verseny.id }})" class="btn btn-warning">🔒 Verseny lezárása</button>
             </div>
         </div>
@@ -190,4 +190,5 @@
     }
     </script>
 </body>
+
 </html>
